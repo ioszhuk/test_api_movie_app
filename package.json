@@ -6,8 +6,7 @@
   "scripts": {
     "start": "tsnd --respawn index.ts",
     "lint": "eslint -c .eslintrc --ext .js,.ts, .",
-    "lint:fix": "npm run lint -- --fix",
-    "test": "jest"
+    "lint:fix": "npm run lint -- --fix"
   },
   "author": "",
   "license": "ISC",
