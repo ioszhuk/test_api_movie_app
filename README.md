@@ -2,7 +2,10 @@
 
 Technology stack: Node.js + Express.js + MongoDB + TypeScript
 
-Demo host: https://api.shark-taxi.ua
+#### Available routes (CRUD):
+
+- Movies: http://localhost:8080/movies
+- Genres: http://localhost:8080/genres
 
 ### Available Scripts
 
@@ -12,7 +15,7 @@ In the project directory, you can run:
 
 Runs the app.
 
-Open [http://localhost](http://localhost) to view it in the browser.
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 The app will reload if you make edits.
 
