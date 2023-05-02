@@ -1,13 +1,20 @@
 import {Request, Response} from 'express';
 import {validationResult} from 'express-validator';
 import {Genre} from '../models/genre';
+import {transformCollection, transformModel} from '../responses/genreResponse';
 
 export class genreController {
   async index(req: Request, res: Response) {
     try {
       const models = await Genre.find();
+
+      if (models) {
+        return res.json(transformCollection(models));
+      }
+
       res.json(models);
     } catch (e: any) {
+      console.log(e.message);
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -17,6 +24,10 @@ export class genreController {
       const {id} = req.params;
 
       const model = await Genre.findById(id);
+
+      if (model) {
+        return res.json(transformModel(model));
+      }
 
       return res.json(model);
     } catch (e: any) {
@@ -37,7 +48,7 @@ export class genreController {
 
       const model = await Genre.create({name});
 
-      res.status(201).json(model);
+      res.status(201).json(transformModel(model));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }
@@ -58,7 +69,7 @@ export class genreController {
 
       const model = await Genre.findOneAndUpdate({_id: id}, {name}, {new: true});
 
-      res.json(model);
+      res.json(transformModel(model));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }
@@ -68,9 +79,9 @@ export class genreController {
     try {
       const {id} = req.params;
 
-      const response = await Genre.findOneAndDelete({_id: id});
+      const model = await Genre.findOneAndDelete({_id: id});
 
-      res.json(response);
+      res.json(transformModel(model));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }

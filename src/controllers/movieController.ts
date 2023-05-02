@@ -1,11 +1,17 @@
 import {Request, Response} from 'express';
 import {validationResult} from 'express-validator';
 import {Movie} from '../models/movie';
+import {transformCollection, transformModel} from '../responses/movieResponse';
 
 export class movieController {
   async index(req: Request, res: Response) {
     try {
       const models = await Movie.find();
+
+      if (models) {
+        return res.json(transformCollection(models));
+      }
+
       res.json(models);
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
@@ -18,7 +24,7 @@ export class movieController {
 
       const model = await Movie.findById(id);
 
-      return res.json(model);
+      return res.json(transformModel(model));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }
@@ -37,7 +43,7 @@ export class movieController {
 
       const model = await Movie.create({key, name, description, img, genres, rate, length});
 
-      res.status(201).json(model);
+      res.status(201).json(transformModel(model));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }
@@ -70,7 +76,7 @@ export class movieController {
         {new: true}
       );
 
-      res.json(model);
+      res.json(transformModel(model));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }
@@ -80,9 +86,9 @@ export class movieController {
     try {
       const {id} = req.params;
 
-      const response = await Movie.findOneAndDelete({_id: id});
+      const model = await Movie.findOneAndDelete({_id: id});
 
-      res.json(response);
+      res.json(transformModel(model));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }
