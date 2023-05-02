@@ -1,8 +1,20 @@
 # Movies Application REST API
 
-Technology stack: Node.js + Express.js + MongoDB + TypeScript
+### Application contains the below features
 
-#### Available routes (CRUD):
+- Movies list
+- Movie detail
+- Movie genres list
+- Movie genre detail
+
+#### Technologies
+
+- Node.js
+- Express.js
+- TypeScript
+- MongoDB
+
+#### Routes (CRUD):
 
 - Movies: http://localhost:8080/movies
 - Genres: http://localhost:8080/genres
