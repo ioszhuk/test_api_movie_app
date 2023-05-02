@@ -7,7 +7,8 @@ export const transformModel = (model: any) => {
 
   return {
     id: model._id,
-    key: model.name,
+    name: model.name,
+    slug: model.key,
     description: model.description,
     img: imgFullUrl,
     genres: model.genres,
