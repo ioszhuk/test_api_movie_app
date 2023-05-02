@@ -33,11 +33,11 @@ The app will reload if you make edits.
 
 You will also see any lint errors in the console.
 
-### `npm lint`
+### `npm run lint`
 
 Runs code quality test with ESLint check.
 
-### `npm lint:fix`
+### `npm run lint:fix`
 
 Runs code quality test with ESLint check + autofix issues.
 
