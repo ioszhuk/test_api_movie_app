@@ -1,6 +1,6 @@
-# Movies Application REST API
+# MovieX Application REST API
 
-### Application contains the below features
+#### Application contains the below features:
 
 - Movies list
 - Movie detail
