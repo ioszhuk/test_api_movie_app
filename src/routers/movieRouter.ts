@@ -8,10 +8,10 @@ const controller = new movieController();
 
 movieRouter.get('/', controller.index);
 
-movieRouter.get('/:id', controller.show);
+movieRouter.get('/:slug', controller.show);
 
 movieRouter.post('/', movieValidator(CREATE_MOVIE), controller.create);
 
-movieRouter.put('/:id', movieValidator(UPDATE_MOVIE), controller.update);
+movieRouter.put('/:slug', movieValidator(UPDATE_MOVIE), controller.update);
 
-movieRouter.delete('/:id', controller.delete);
+movieRouter.delete('/:slug', controller.delete);

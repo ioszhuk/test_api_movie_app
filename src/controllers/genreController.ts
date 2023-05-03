@@ -8,13 +8,8 @@ export class genreController {
     try {
       const models = await Genre.find();
 
-      if (models) {
-        return res.json(transformCollection(models));
-      }
-
-      res.json(models);
+      res.json(transformCollection(models));
     } catch (e: any) {
-      console.log(e.message);
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -25,11 +20,7 @@ export class genreController {
 
       const model = await Genre.findById(id);
 
-      if (model) {
-        return res.json(transformModel(model));
-      }
-
-      return res.json(model);
+      res.json(transformModel(model));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }
