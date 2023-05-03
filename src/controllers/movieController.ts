@@ -8,11 +8,7 @@ export class movieController {
     try {
       const models = await Movie.find();
 
-      if (models) {
-        return res.json(transformCollection(models));
-      }
-
-      res.json(models);
+      res.json(transformCollection(models));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }
@@ -20,11 +16,11 @@ export class movieController {
 
   async show(req: Request, res: Response) {
     try {
-      const {id} = req.params;
+      const slug = req.params?.slug;
 
-      const model = await Movie.findById(id);
+      const model = await Movie.findOne({key: slug});
 
-      return res.json(transformModel(model));
+      res.json(transformModel(model));
     } catch (e: any) {
       res.status(400).json({message: 'Error happened in request'});
     }
@@ -39,9 +35,9 @@ export class movieController {
         return;
       }
 
-      const {key, name, description, img, genres, rate, length} = req.body;
+      const {slug, name, description, img, genres, rate, length} = req.body;
 
-      const model = await Movie.create({key, name, description, img, genres, rate, length});
+      const model = await Movie.create({key: slug, name, description, img, genres, rate, length});
 
       res.status(201).json(transformModel(model));
     } catch (e: any) {
@@ -58,14 +54,14 @@ export class movieController {
         return;
       }
 
-      const {id} = req.params;
+      const slug = req.params?.slug;
 
-      const {key, name, description, img, genres, rate, length} = req.body;
+      const {name, description, img, genres, rate, length} = req.body;
 
       const model = await Movie.findOneAndUpdate(
-        {_id: id},
+        {key: slug},
         {
-          key,
+          key: slug,
           name,
           description,
           img,
@@ -84,9 +80,9 @@ export class movieController {
 
   async delete(req: Request, res: Response) {
     try {
-      const {id} = req.params;
+      const slug = req.params?.slug;
 
-      const model = await Movie.findOneAndDelete({_id: id});
+      const model = await Movie.findOneAndDelete({key: slug});
 
       res.json(transformModel(model));
     } catch (e: any) {
