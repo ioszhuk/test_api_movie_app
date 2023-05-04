@@ -9,6 +9,10 @@ mainRouter.use('/movies', movieRouter);
 
 mainRouter.use('/genres', genreRouter);
 
-mainRouter.use('/', async (req: Request, res: Response) => {
+mainRouter.get('/', (req: Request, res: Response) => {
   res.send('Application is running!');
+});
+
+mainRouter.use((req: Request, res: Response) => {
+  res.status(404).send('Incorrect request');
 });

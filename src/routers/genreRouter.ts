@@ -1,6 +1,6 @@
 import express, {Router} from 'express';
 import {genreController} from '../controllers/genreController';
-import {CREATE_GENRE, UPDATE_GENRE, genreValidator} from '../validators/genreValidator';
+import {genreValidator, GenreValidateScenario} from '../validators/genreValidator';
 
 export const genreRouter: Router = express.Router();
 
@@ -10,8 +10,8 @@ genreRouter.get('/', controller.index);
 
 genreRouter.get('/:id', controller.show);
 
-genreRouter.post('/', genreValidator(CREATE_GENRE), controller.create);
+genreRouter.post('/', genreValidator(GenreValidateScenario.CREATE_GENRE), controller.create);
 
-genreRouter.put('/:id', genreValidator(UPDATE_GENRE), controller.update);
+genreRouter.put('/:id', genreValidator(GenreValidateScenario.UPDATE_GENRE), controller.update);
 
 genreRouter.delete('/:id', controller.delete);

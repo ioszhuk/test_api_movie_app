@@ -1,13 +1,15 @@
 import {body, ValidationChain} from 'express-validator';
 
-export const CREATE_GENRE = 'CreateGenre';
-export const UPDATE_GENRE = 'UpdateGenre';
+export enum GenreValidateScenario {
+  CREATE_GENRE = 'CREATE_GENRE',
+  UPDATE_GENRE = 'UPDATE_GENRE'
+}
 
 export function genreValidator(methodName: string): ValidationChain[] | any {
   switch (methodName) {
-    case CREATE_GENRE:
+    case GenreValidateScenario.CREATE_GENRE:
       return [body('name').exists().isString().trim().escape()];
-    case UPDATE_GENRE:
+    case GenreValidateScenario.UPDATE_GENRE:
       return [body('name').exists().isString().trim().escape()];
   }
 }
