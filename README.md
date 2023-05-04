@@ -1,6 +1,6 @@
 # MovieX (Express.js REST API)
 
-## Application contains the below features:
+### Application contains the below features:
 
 - Movies list
 - Movie detail
