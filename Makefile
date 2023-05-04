@@ -4,5 +4,3 @@ dev:
 prod:
 	docker-compose -f docker-compose.prod.yml up -d --build
 
-stop:
-	docker-compose stop
