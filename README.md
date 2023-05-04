@@ -38,6 +38,8 @@ Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 ## Available Scripts
 
+Recommend version of Node.js: v18 (LTS).
+
 In the project directory, you can run:
 
 ### `npm start`
