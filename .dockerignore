@@ -4,8 +4,6 @@
 # JetBrains IDE
 *.idea
 
-build
-
 # Ignore all hidden folders
 .DS_Store
 .dockerignore
