@@ -1,0 +1,22 @@
+# Ignore all logfiles and tempfiles.
+*.log
+
+# JetBrains IDE
+*.idea
+
+build
+
+# Ignore all hidden folders
+.DS_Store
+.dockerignore
+Dockerfile
+Dockerfile*
+docker-compose*
+.env*
+README*
+
+.git
+.gitignore
+
+# NPM
+node_modules
