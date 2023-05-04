@@ -1,13 +1,13 @@
-# MovieX Application REST API
+# MovieX (Express.js REST API)
 
-#### Application contains the below features:
+### Application contains the below features:
 
 - Movies list
 - Movie detail
 - Movie genres list
 - Movie genre detail
 
-#### Technologies
+### Technologies
 
 - Node.js
 - Express.js
@@ -18,6 +18,23 @@
 
 - Movies: http://localhost:8080/movies
 - Genres: http://localhost:8080/genres
+
+## Docker Scripts
+
+In the project directory, you can run:
+
+### `make dev`
+
+Runs the app in the development mode in Docker container.
+
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
+
+### `make prod`
+
+Build and runs the app in the production mode in Docker container.
+
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
+
 
 ### Available Scripts
 

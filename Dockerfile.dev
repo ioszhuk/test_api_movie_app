@@ -1,0 +1,14 @@
+# build environment
+FROM node:18-alpine
+
+WORKDIR /application
+
+COPY package*.json .
+
+RUN npm install --silent
+
+COPY . .
+
+EXPOSE 8080
+
+CMD ["npm", "run", "dev"]

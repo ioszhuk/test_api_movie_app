@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "tsnd --respawn index.ts",
+    "start": "tsnd index.ts",
+    "dev": "tsnd --respawn index.ts",
     "lint": "eslint -c .eslintrc --ext .js,.ts, .",
     "lint:fix": "npm run lint -- --fix"
   },
