@@ -14,9 +14,28 @@ export class movieController {
     }
   }
 
+  async search(req: Request, res: Response) {
+    try {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        res.status(422).json({message: 'Validation error', errors: errors});
+        return;
+      }
+
+      const {name} = req.body;
+
+      const models = await Movie.find({name: new RegExp(name, 'i')});
+
+      res.status(200).json(transformCollection(models));
+    } catch (e: any) {
+      res.status(400).json({message: 'Error happened in request'});
+    }
+  }
+
   async show(req: Request, res: Response) {
     try {
-      const slug = req.params?.slug;
+      const {slug} = req.params;
 
       const model = await Movie.findOne({key: slug});
 

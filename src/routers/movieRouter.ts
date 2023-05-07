@@ -10,6 +10,8 @@ movieRouter.get('/', controller.index);
 
 movieRouter.get('/:slug', controller.show);
 
+movieRouter.post('/search', movieValidator(MovieValidateScenario.SEARCH_MOVIE), controller.search);
+
 movieRouter.post('/', movieValidator(MovieValidateScenario.CREATE_MOVIE), controller.create);
 
 movieRouter.put('/:slug', movieValidator(MovieValidateScenario.UPDATE_MOVIE), controller.update);

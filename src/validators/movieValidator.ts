@@ -2,7 +2,8 @@ import {body, ValidationChain} from 'express-validator';
 
 export enum MovieValidateScenario {
   CREATE_MOVIE = 'CREATE_MOVIE',
-  UPDATE_MOVIE = 'UPDATE_MOVIE'
+  UPDATE_MOVIE = 'UPDATE_MOVIE',
+  SEARCH_MOVIE = 'SEARCH_MOVIE'
 }
 
 export function movieValidator(methodName: string): ValidationChain[] | any {
@@ -27,5 +28,7 @@ export function movieValidator(methodName: string): ValidationChain[] | any {
         body('rate').optional().isString().trim().escape(),
         body('length').optional().isString().trim().escape()
       ];
+    case MovieValidateScenario.SEARCH_MOVIE:
+      return [body('name').exists().isString().trim().escape()];
   }
 }
