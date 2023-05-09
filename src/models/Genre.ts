@@ -1,4 +1,4 @@
-import {Model, model, Schema, Document} from 'mongoose';
+import {Model, Document, model, Schema} from 'mongoose';
 
 export interface IGenre extends Document {
   name: string;

@@ -21,5 +21,3 @@ jobs:
         run: npm ci --silent
       - name: lint code
         run: npm run lint
-      - name: run application
-        run: npm run start

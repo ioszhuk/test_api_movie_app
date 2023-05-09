@@ -1,6 +1,6 @@
 import {IGenre} from '../models/Genre';
 
-export const transformCollection = (models: IGenre[]) => {
+export const transformCollection = (models: IGenre[] | null) => {
   if (!models) {
     return null;
   }
@@ -8,7 +8,7 @@ export const transformCollection = (models: IGenre[]) => {
   return models.map((model: IGenre) => transformModel(model));
 };
 
-export const transformModel = (model: IGenre) => {
+export const transformModel = (model: IGenre | null) => {
   if (!model) {
     return null;
   }

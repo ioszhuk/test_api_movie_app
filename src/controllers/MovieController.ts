@@ -6,7 +6,7 @@ import {transformCollection, transformModel} from '../responses/movieResponse';
 class MovieController {
   async index(req: Request, res: Response) {
     try {
-      const models = await Movie.find<IMovie>();
+      const models: IMovie[] = await Movie.find();
 
       res.json(transformCollection(models));
     } catch (e) {
@@ -25,7 +25,7 @@ class MovieController {
 
       const name = `${req.query.name}`;
 
-      const models = await Movie.find<IMovie>({name: new RegExp(name, 'i')});
+      const models: IMovie[] = await Movie.find({name: new RegExp(name, 'i')});
 
       res.status(200).json(transformCollection(models));
     } catch (e) {
@@ -35,9 +35,9 @@ class MovieController {
 
   async show(req: Request, res: Response) {
     try {
-      const {slug} = req.params;
+      const slug = req.params.slug;
 
-      const model = await Movie.findOne<IMovie>({key: slug});
+      const model: IMovie | null = await Movie.findOne({key: slug});
 
       res.json(transformModel(model));
     } catch (e) {
@@ -56,7 +56,7 @@ class MovieController {
 
       const {slug, name, description, img, genres, rate, length} = req.body;
 
-      const model = await Movie.create<IMovie>({key: slug, name, description, img, genres, rate, length});
+      const model: IMovie = await Movie.create({key: slug, name, description, img, genres, rate, length});
 
       res.status(201).json(transformModel(model));
     } catch (e) {
@@ -73,11 +73,11 @@ class MovieController {
         return;
       }
 
-      const slug = req.params?.slug;
+      const slug = req.params.slug;
 
       const {name, description, img, genres, rate, length} = req.body;
 
-      const model = await Movie.findOneAndUpdate<IMovie>(
+      const model: IMovie | null = await Movie.findOneAndUpdate(
         {key: slug},
         {
           key: slug,
@@ -99,9 +99,9 @@ class MovieController {
 
   async delete(req: Request, res: Response) {
     try {
-      const slug = req.params?.slug;
+      const slug = req.params.slug;
 
-      const model = await Movie.findOneAndDelete({key: slug});
+      const model: IMovie | null = await Movie.findOneAndDelete({key: slug});
 
       res.json(transformModel(model));
     } catch (e) {

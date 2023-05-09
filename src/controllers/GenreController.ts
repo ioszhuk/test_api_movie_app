@@ -6,7 +6,7 @@ import {transformCollection, transformModel} from '../responses/genreResponse';
 class GenreController {
   async index(req: Request, res: Response) {
     try {
-      const models = await Genre.find<IGenre>();
+      const models: IGenre[] = await Genre.find();
 
       res.json(transformCollection(models));
     } catch (e) {
@@ -18,7 +18,7 @@ class GenreController {
     try {
       const {id} = req.params;
 
-      const model = await Genre.findById<IGenre>(id);
+      const model: IGenre | null = await Genre.findById(id);
 
       res.json(transformModel(model));
     } catch (e) {
@@ -35,9 +35,9 @@ class GenreController {
         return;
       }
 
-      const {name} = req.body;
+      const name = req.body.name;
 
-      const model = await Genre.create<IGenre>({name});
+      const model: IGenre = await Genre.create({name});
 
       res.status(201).json(transformModel(model));
     } catch (e) {
@@ -54,11 +54,11 @@ class GenreController {
         return;
       }
 
-      const {id} = req.params;
+      const id = req.params.id;
 
       const {name} = req.body;
 
-      const model = await Genre.findOneAndUpdate<IGenre>({_id: id}, {name}, {new: true});
+      const model: IGenre | null = await Genre.findOneAndUpdate({_id: id}, {name}, {new: true});
 
       res.json(transformModel(model));
     } catch (e) {
@@ -68,9 +68,9 @@ class GenreController {
 
   async delete(req: Request, res: Response) {
     try {
-      const {id} = req.params;
+      const id = req.params.id;
 
-      const model = await Genre.findOneAndDelete<IGenre>({_id: id});
+      const model: IGenre | null = await Genre.findOneAndDelete({_id: id});
 
       res.json(transformModel(model));
     } catch (e) {

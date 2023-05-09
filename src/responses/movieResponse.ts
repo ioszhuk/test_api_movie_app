@@ -1,6 +1,6 @@
 import {IMovie} from '../models/Movie';
 
-export const transformCollection = (models: IMovie[]) => {
+export const transformCollection = (models: IMovie[] | null) => {
   if (!models) {
     return null;
   }
@@ -8,7 +8,7 @@ export const transformCollection = (models: IMovie[]) => {
   return models.map((model: IMovie) => transformModel(model));
 };
 
-export const transformModel = (model: IMovie) => {
+export const transformModel = (model: IMovie | null) => {
   if (!model) {
     return null;
   }

@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.use(mainRouter);
 
 function startServer() {
-  app.listen(config.server.port, (): void => {
+  app.listen(config.server.port, () => {
     // eslint-disable-next-line no-console
     console.log('App run on port:', config.server.port);
   });
