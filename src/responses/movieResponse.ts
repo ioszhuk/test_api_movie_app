@@ -1,12 +1,14 @@
-export const transformCollection = (models: any) => {
+import {IMovie} from '../models/Movie';
+
+export const transformCollection = (models: IMovie[]) => {
   if (!models) {
     return null;
   }
 
-  return models.map((model: any) => transformModel(model));
+  return models.map((model: IMovie) => transformModel(model));
 };
 
-export const transformModel = (model: any) => {
+export const transformModel = (model: IMovie) => {
   if (!model) {
     return null;
   }

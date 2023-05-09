@@ -1,15 +1,15 @@
 import {Request, Response} from 'express';
 import {validationResult} from 'express-validator';
-import {Movie} from '../models/movie';
+import {IMovie, Movie} from '../models/Movie';
 import {transformCollection, transformModel} from '../responses/movieResponse';
 
-export class movieController {
+class MovieController {
   async index(req: Request, res: Response) {
     try {
-      const models = await Movie.find();
+      const models = await Movie.find<IMovie>();
 
       res.json(transformCollection(models));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -23,12 +23,12 @@ export class movieController {
         return;
       }
 
-      const {name} = req.body;
+      const name = `${req.query.name}`;
 
-      const models = await Movie.find({name: new RegExp(name, 'i')});
+      const models = await Movie.find<IMovie>({name: new RegExp(name, 'i')});
 
       res.status(200).json(transformCollection(models));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -37,10 +37,10 @@ export class movieController {
     try {
       const {slug} = req.params;
 
-      const model = await Movie.findOne({key: slug});
+      const model = await Movie.findOne<IMovie>({key: slug});
 
       res.json(transformModel(model));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -56,10 +56,10 @@ export class movieController {
 
       const {slug, name, description, img, genres, rate, length} = req.body;
 
-      const model = await Movie.create({key: slug, name, description, img, genres, rate, length});
+      const model = await Movie.create<IMovie>({key: slug, name, description, img, genres, rate, length});
 
       res.status(201).json(transformModel(model));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -77,7 +77,7 @@ export class movieController {
 
       const {name, description, img, genres, rate, length} = req.body;
 
-      const model = await Movie.findOneAndUpdate(
+      const model = await Movie.findOneAndUpdate<IMovie>(
         {key: slug},
         {
           key: slug,
@@ -92,7 +92,7 @@ export class movieController {
       );
 
       res.json(transformModel(model));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -104,8 +104,10 @@ export class movieController {
       const model = await Movie.findOneAndDelete({key: slug});
 
       res.json(transformModel(model));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
 }
+
+export const movieController = new MovieController();

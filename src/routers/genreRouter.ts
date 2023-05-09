@@ -1,17 +1,15 @@
 import express, {Router} from 'express';
-import {genreController} from '../controllers/genreController';
 import {genreValidator, GenreValidateScenario} from '../validators/genreValidator';
+import {genreController} from '../controllers/GenreController';
 
 export const genreRouter: Router = express.Router();
 
-const controller = new genreController();
+genreRouter.get('/', genreController.index);
 
-genreRouter.get('/', controller.index);
+genreRouter.get('/:id', genreController.show);
 
-genreRouter.get('/:id', controller.show);
+genreRouter.post('/', genreValidator(GenreValidateScenario.CREATE_GENRE), genreController.create);
 
-genreRouter.post('/', genreValidator(GenreValidateScenario.CREATE_GENRE), controller.create);
+genreRouter.put('/:id', genreValidator(GenreValidateScenario.UPDATE_GENRE), genreController.update);
 
-genreRouter.put('/:id', genreValidator(GenreValidateScenario.UPDATE_GENRE), controller.update);
-
-genreRouter.delete('/:id', controller.delete);
+genreRouter.delete('/:id', genreController.delete);

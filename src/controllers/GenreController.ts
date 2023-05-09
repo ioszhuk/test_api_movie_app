@@ -1,15 +1,15 @@
 import {Request, Response} from 'express';
 import {validationResult} from 'express-validator';
-import {Genre} from '../models/genre';
+import {Genre, IGenre} from '../models/Genre';
 import {transformCollection, transformModel} from '../responses/genreResponse';
 
-export class genreController {
+class GenreController {
   async index(req: Request, res: Response) {
     try {
-      const models = await Genre.find();
+      const models = await Genre.find<IGenre>();
 
       res.json(transformCollection(models));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -18,10 +18,10 @@ export class genreController {
     try {
       const {id} = req.params;
 
-      const model = await Genre.findById(id);
+      const model = await Genre.findById<IGenre>(id);
 
       res.json(transformModel(model));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -37,10 +37,10 @@ export class genreController {
 
       const {name} = req.body;
 
-      const model = await Genre.create({name});
+      const model = await Genre.create<IGenre>({name});
 
       res.status(201).json(transformModel(model));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -58,10 +58,10 @@ export class genreController {
 
       const {name} = req.body;
 
-      const model = await Genre.findOneAndUpdate({_id: id}, {name}, {new: true});
+      const model = await Genre.findOneAndUpdate<IGenre>({_id: id}, {name}, {new: true});
 
       res.json(transformModel(model));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
@@ -70,11 +70,13 @@ export class genreController {
     try {
       const {id} = req.params;
 
-      const model = await Genre.findOneAndDelete({_id: id});
+      const model = await Genre.findOneAndDelete<IGenre>({_id: id});
 
       res.json(transformModel(model));
-    } catch (e: any) {
+    } catch (e) {
       res.status(400).json({message: 'Error happened in request'});
     }
   }
 }
+
+export const genreController = new GenreController();

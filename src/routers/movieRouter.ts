@@ -1,19 +1,17 @@
 import express, {Router} from 'express';
-import {movieController} from '../controllers/movieController';
 import {MovieValidateScenario, movieValidator} from '../validators/movieValidator';
+import {movieController} from '../controllers/MovieController';
 
 export const movieRouter: Router = express.Router();
 
-const controller = new movieController();
+movieRouter.get('/', movieController.index);
 
-movieRouter.get('/', controller.index);
+movieRouter.get('/search', movieValidator(MovieValidateScenario.SEARCH_MOVIE), movieController.search);
 
-movieRouter.get('/:slug', controller.show);
+movieRouter.get('/:slug', movieController.show);
 
-movieRouter.post('/search', movieValidator(MovieValidateScenario.SEARCH_MOVIE), controller.search);
+movieRouter.post('/', movieValidator(MovieValidateScenario.CREATE_MOVIE), movieController.create);
 
-movieRouter.post('/', movieValidator(MovieValidateScenario.CREATE_MOVIE), controller.create);
+movieRouter.put('/:slug', movieValidator(MovieValidateScenario.UPDATE_MOVIE), movieController.update);
 
-movieRouter.put('/:slug', movieValidator(MovieValidateScenario.UPDATE_MOVIE), controller.update);
-
-movieRouter.delete('/:slug', controller.delete);
+movieRouter.delete('/:slug', movieController.delete);

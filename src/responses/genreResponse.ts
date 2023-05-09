@@ -1,12 +1,14 @@
-export const transformCollection = (models: any) => {
+import {IGenre} from '../models/Genre';
+
+export const transformCollection = (models: IGenre[]) => {
   if (!models) {
     return null;
   }
 
-  return models.map((model: any) => transformModel(model));
+  return models.map((model: IGenre) => transformModel(model));
 };
 
-export const transformModel = (model: any) => {
+export const transformModel = (model: IGenre) => {
   if (!model) {
     return null;
   }

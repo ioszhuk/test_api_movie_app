@@ -1,32 +1,36 @@
-import * as dotenv from 'dotenv';
-
-dotenv.config();
+import {config} from './src/config';
 import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import express, {Express} from 'express';
-import {mongoConnectionUrl, helmetOptions, corsOptions} from './src/config';
 import {mainRouter} from './src/routers/mainRouter';
+import {Logger} from './src/utils/Logger';
 
 const app: Express = express();
 
-app.use(helmet(helmetOptions));
-app.use(cors(corsOptions));
+app.use(helmet(config.helmet.options));
+app.use(cors(config.cors.options));
 app.use(express.json());
 app.use(express.static('public'));
 
 app.use(mainRouter);
 
-async function start() {
-  try {
-    await mongoose.connect(mongoConnectionUrl);
-
-    app.listen(process.env.PORT, (): void => {
-      console.log('App run on port:', process.env.PORT);
-    });
-  } catch (error: any) {
-    console.log('TOTAL ERROR:', error.message);
-  }
+function startServer() {
+  app.listen(config.server.port, (): void => {
+    // eslint-disable-next-line no-console
+    console.log('App run on port:', config.server.port);
+  });
 }
 
-start();
+(function connectDB() {
+  mongoose
+    .connect(config.mongo.url, {retryWrites: true, writeConcern: {w: 'majority'}})
+    .then(() => {
+      Logger.info('Connected to mongoDB');
+      startServer();
+    })
+    .catch((error) => {
+      Logger.error('Unable to connect mongoDB:');
+      Logger.error(error);
+    });
+})();

@@ -1,4 +1,4 @@
-import {body, ValidationChain} from 'express-validator';
+import {body, query, ValidationChain} from 'express-validator';
 
 export enum MovieValidateScenario {
   CREATE_MOVIE = 'CREATE_MOVIE',
@@ -6,29 +6,31 @@ export enum MovieValidateScenario {
   SEARCH_MOVIE = 'SEARCH_MOVIE'
 }
 
-export function movieValidator(methodName: string): ValidationChain[] | any {
+export function movieValidator(methodName: string): ValidationChain[] | [] {
   switch (methodName) {
-    case MovieValidateScenario.CREATE_MOVIE:
-      return [
-        body('key').exists().isString().trim().escape(),
-        body('name').exists().isString().trim().escape(),
-        body('description').exists().isString().trim().escape(),
-        body('img').exists().isString().trim().escape(),
-        body('genres').exists(),
-        body('rate').exists().isString().trim().escape(),
-        body('length').exists().isString().trim().escape()
-      ];
-    case MovieValidateScenario.UPDATE_MOVIE:
-      return [
-        body('key').optional().isString().trim().escape(),
-        body('name').optional().isString().trim().escape(),
-        body('description').optional().isString().trim().escape(),
-        body('img').optional().isString().trim().escape(),
-        body('genres').optional(),
-        body('rate').optional().isString().trim().escape(),
-        body('length').optional().isString().trim().escape()
-      ];
-    case MovieValidateScenario.SEARCH_MOVIE:
-      return [body('name').exists().isString().trim().escape()];
+  case MovieValidateScenario.CREATE_MOVIE:
+    return [
+      body('key').trim().notEmpty(),
+      body('name').trim().notEmpty(),
+      body('description').trim().notEmpty(),
+      body('img').trim().notEmpty(),
+      body('genres').notEmpty(),
+      body('rate').notEmpty().isNumeric(),
+      body('length').trim().notEmpty()
+    ];
+  case MovieValidateScenario.UPDATE_MOVIE:
+    return [
+      body('key').optional().trim(),
+      body('name').optional().trim(),
+      body('description').optional().trim(),
+      body('img').optional().trim(),
+      body('genres').optional(),
+      body('rate').optional().isNumeric(),
+      body('length').optional().trim()
+    ];
+  case MovieValidateScenario.SEARCH_MOVIE:
+    return [query('name').trim().notEmpty().toLowerCase()];
+  default:
+    return [];
   }
 }
